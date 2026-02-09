@@ -6,12 +6,20 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
+  HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+export const SpinnerInterceptor: HttpInterceptorFn = (req,
+  next) => {
+  const _spinnerService = inject(SpinnerService);
+  _spinnerService.show();
+  return next(req).pipe(finalize(() => _spinnerService.hide()));
+}
+
+/*@Injectable({ providedIn: 'root' })
 export class SpinnerInterceptor implements HttpInterceptor {
   private readonly _spinnerService = inject(SpinnerService);
 
@@ -24,4 +32,4 @@ export class SpinnerInterceptor implements HttpInterceptor {
       .handle(request)
       .pipe(finalize(() => this._spinnerService.hide()));
   }
-}
+}*/

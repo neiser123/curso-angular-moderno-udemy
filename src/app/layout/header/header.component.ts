@@ -1,5 +1,5 @@
 import { CurrencyPipe, NgClass, NgFor, NgIf, SlicePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartStore } from 'src/app/store/cart-state/cart-state.service';
 
@@ -12,6 +12,7 @@ import { CartStore } from 'src/app/store/cart-state/cart-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  @Input() cart!: CartStore | null;
+  // @Input() cart!: CartStore | null;
+  cart = input.required<CartStore | null>();// signal input ( input en minuscula)
   showCart = false;
 }

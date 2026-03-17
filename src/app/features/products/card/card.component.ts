@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  input,
   Input,
+  output,
   Output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -20,10 +22,11 @@ import { AddToCartComponent } from '@shared/ui/add-to-cart/add-to-cart.component
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
-  @Input({ required: true }) product!: Product;
-  @Output() addToCartEvent = new EventEmitter<Product>();
-
+  //@Input({ required: true }) product!: Product;
+  currenproduct = input.required<Product>({ alias: 'product' });//input signals
+  // @Output() addToCartEvent = new EventEmitter<Product>();
+  addToCartEvent = output<Product>();//outputs signals
   onAddToCart(): void {
-    this.addToCartEvent.emit(this.product);
+    this.addToCartEvent.emit(this.currenproduct());
   }
 }

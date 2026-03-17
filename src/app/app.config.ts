@@ -5,6 +5,7 @@ import {
   ApplicationConfig,
   importProvidersFrom,
   LOCALE_ID,
+  provideExperimentalZonelessChangeDetection,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
     // useClass: SpinnerInterceptor,
     // multi: true,
     //},
+    provideExperimentalZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([SpinnerInterceptor])),
     provideAnimations(),
     provideToastr({
@@ -31,7 +33,7 @@ export const appConfig: ApplicationConfig = {
       timeOut: 1500,
       preventDuplicates: false,
     }),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    // provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
   ],
 };

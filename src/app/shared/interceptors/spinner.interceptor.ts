@@ -19,6 +19,9 @@ export const SpinnerInterceptor: HttpInterceptorFn = (req,
   return next(req).pipe(finalize(() => _spinnerService.hide()));
 }
 
+
+
+
 /*@Injectable({ providedIn: 'root' })
 export class SpinnerInterceptor implements HttpInterceptor {
   private readonly _spinnerService = inject(SpinnerService);

@@ -21,7 +21,7 @@ export default class ProductsComponent implements OnInit {
   private readonly _cartService = inject(CartStateService);
 
   // products$ = this._productsService.products$;
-  products$ = toSignal(this._productsService.products$);
+  products = this._productsService.products;
 
 
   ngOnInit() {

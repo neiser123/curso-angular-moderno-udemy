@@ -1,10 +1,11 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Product } from '@features/products/product.interface';
 //import { Console, error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { CartCalculatorService } from 'src/app/store/cart-state/cart-calculator.service';
+import { CartStorageService } from '../cart-storage.service';
 
 export interface CartStore {
   products: Product[];
@@ -23,7 +24,7 @@ export class CartStateService {
   // private readonly _cartState = new BehaviorSubject<CartStore>(
   //   initialCartState
   // );
-
+  private readonly _cartStorageService = inject(CartStorageService);
   private readonly _cartCalculatorService = inject(CartCalculatorService);
   private readonly _toastrService = inject(ToastrService);
 
@@ -37,7 +38,14 @@ export class CartStateService {
     productsCount: this.productsCount(),
     totalAmount: this.totalAmount(),
   }));
-
+  constructor() {
+    const savedState = this._cartStorageService.loadState();
+    console.log('loadState' + savedState);
+    if (savedState) {
+      this._products.set(savedState.products);
+    }
+    effect(() => this._cartStorageService.saveState(this.cartStore()));
+  }
   // cart$ = this._cartState.asObservable();
   //cart$ = toObservable(this.cartStore);// ponemos la signal
 

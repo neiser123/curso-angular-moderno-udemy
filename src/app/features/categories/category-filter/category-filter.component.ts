@@ -29,7 +29,7 @@ import { ProductsService } from '@features/products/products.service';
           {{ category }}
         </button>
       </li> -->
-  @for (category of categories$ | async; track category) {
+  @for (category of categories(); track category) {
     <li>
       <app-category-button [category]="category" [(filterCategory)]="selectedCategory"/>
 
@@ -40,7 +40,7 @@ import { ProductsService } from '@features/products/products.service';
   `,
 })
 export class CategoryFilterComponent {
-  readonly categories$ = inject(CategoryService).categories$;
+  readonly categories = inject(CategoryService).categories;
 
   selectedCategory = signal<string>('ALL'); //signal que va filtar por seleccionado en categoria
   private readonly _productService = inject(ProductsService);

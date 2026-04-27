@@ -1,0 +1,24 @@
+<section class="product-container">
+  @defer (on viewport; prefetch on idle) {
+  <div class="product-grid">
+    <!-- *ngFor="let product of products$ | async; trackBy: trackById" -->
+    @for (product of products(); track product.id) {
+    <app-card
+      (addToCartEvent)="onAddToCart($event)"
+      data-testid="product-card"
+      class="product-card"
+      [product]="product"
+    >
+    </app-card>
+    } @empty{
+    <a>no results yet</a>
+    }
+  </div>
+  }@loading(minimum 500ms){
+  <div class="loading-state">Loading...</div>
+  }@placeholder {
+  <div class="placeholder-state">
+    desplazate hacia abajo para cargar los productos
+  </div>
+  }
+</section>
